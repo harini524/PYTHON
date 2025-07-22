@@ -1,0 +1,15 @@
+name=input('enter file:')
+handle=open(name,'r')
+text=handle.read()
+words=text.split()
+counts=dict()
+for word in words:
+    counts[word]=counts.get(word,0)+1
+bigcount=none
+bigword=none
+for word,count in counts.items():
+    if bigcount is none or count>bigcount:
+        bigword=word
+        bigcount=count
+    print(bigword,bigcount)
+    
