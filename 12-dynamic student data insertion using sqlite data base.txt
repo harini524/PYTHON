@@ -1,0 +1,44 @@
+import sqlite3
+import pandas as pd
+conn = sqlite3.connect("students.db")
+cursor = conn.cursor()
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS students (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        age INTEGER NOT NULL
+    )
+''')
+conn.commit()
+print("Database and table created successfully!")
+def insert_student(name, age):
+    cursor.execute("INSERT INTO students (name, age) VALUES (?, ?)", (name, age))
+    conn.commit()
+    print(f"Student '{name}' added successfully!")
+n = int(input("How many students do you want to add? "))
+for _ in range(n):
+    name = input("Enter student name: ")
+    age = int(input("Enter student age: "))
+    insert_student(name, age)
+df = pd.read_sql("SELECT * FROM students", conn)
+print("\nStudent Records:")
+print(df)
+conn.close()
+print("Database connection closed.")
+
+
+
+Database and table created successfully!
+How many students do you want to add?  2
+Enter student name:  harini
+Enter student age:  20
+Student 'harini' added successfully!
+Enter student name:  vishanth
+Enter student age:  19
+Student 'vishanth' added successfully!
+
+Student Records:
+   id      name  age
+0   1    harini   20
+1   2  vishanth   19
+Database connection closed.
